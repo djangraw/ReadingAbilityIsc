@@ -14,7 +14,7 @@ The code requires adding this project directory and all subdirectories to your M
 
 ## Datasets
 Data from the included participants described in the paper can be found in the following repository on the Open Science Framework: https://osf.io/qk5yd/.
-After downloading and unzipping this file, the `Raw` folder should be placed inside the `Data` folder of this repository.
+After downloading and unzipping this file, its contents should be placed inside the `Data` folder of this repository.
 
 If you must place the data elsewhere (e.g., on a cluster), change the directories in [00_CommonVariables.m](Scripts/ShellScripts/00_CommonVariables.sh), each setwd command in the [R folder](Scripts/R), and [GetStoryConstants.m](Scripts/MATLAB/GetStoryConstants.m)
 
