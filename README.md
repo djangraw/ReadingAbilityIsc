@@ -19,12 +19,11 @@ After downloading and unzipping this file, its contents should be placed inside 
 If you must place the data elsewhere (e.g., on a cluster), change the directories in [00_CommonVariables.m](Scripts/ShellScripts/00_CommonVariables.sh), each setwd command in the [R folder](Scripts/R), and [GetStoryConstants.m](Scripts/MATLAB/GetStoryConstants.m)
 
 ## Usage
-After data are copied to the Data folder of this repository, the scripts described below should then be run from their respective folders. Processed data files and figures will be saved to subfolders of the `Data` folder.
+After data are copied to the Data folder of this repository, the scripts described below should then be run from their respective folders. Processed data files and figures will be saved to subfolders of the `Data` folder. Note that to remove personally identifying information, the shared anatomical data are the skull-stripped brain.nii and associated masks produced by freesurfer's recon-all (see [RunFreesurferOnAll.sh](Scripts/ShellScripts/RunFreesurferOnAll.sh) for the code used to run freesurfer on the original anatomical images). 
 
 ### fMRI Preprocessing
 Converts raw fMRI data into preprocessed files. Run the following:
 - [RunStoryIscAfniProc_swarm.sh](Scripts/ShellScripts/RunStoryIscAfniProc_swarm.sh) to preprocess all fMRI data
-- [RunFreesurferOnAll.sh](Scripts/ShellScripts/RunFreesurferOnAll.sh) to run freesurfer on the results
 - [RunStory3dDeconvolve_block_tlrc_swarm_minus12.sh](Scripts/ShellScripts/RunStory3dDeconvolve_block_tlrc_swarm_minus12.sh) to run a GLM involving visual and auditory blocks
 - [RunStoryGroupTtest_block_tlrc_minus12.sh](Scripts/ShellScripts/RunStoryGroupTtest_block_tlrc_minus12.sh) to run group t-test on GLM results
 - [SaveMeanTimecourses_TopBot.m](Scripts/MATLAB/SaveMeanTimecourses_TopBot.m) to save mean and stderr timecourses of activity for each group
