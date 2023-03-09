@@ -6,7 +6,7 @@ This repository contains the scripts necessary to preprocess, analyze, print and
 
 
 ## Dependencies
-This code depends on AFNI (version 22.1.09 or later), freesurfer (version 6 or later), and MATLAB (version 2022 or later).
+This code depends on AFNI (version 22.1.09 or later), freesurfer (version 6 or later), and MATLAB (version 2022 or later). The MakeSumaImages_script.m plotting commands also require imagemagick (version 6 or later).
 
 Data must be downloaded and placed as described below.
 
@@ -19,7 +19,7 @@ After downloading and unzipping this file, its contents should be placed inside 
 If you must place the data elsewhere (e.g., on a cluster), change the directories in [00_CommonVariables.m](Scripts/ShellScripts/00_CommonVariables.sh), each setwd command in the [R folder](Scripts/R), and [GetStoryConstants.m](Scripts/MATLAB/GetStoryConstants.m)
 
 ## Usage
-After data are copied to the Data folder of this repository, the scripts described below should then be run from their respective folders. Processed data files and figures will be saved to subfolders of the `Data` folder. Note that to remove personally identifying information, the shared anatomical data are the skull-stripped brain.nii and associated masks produced by freesurfer's recon-all (see [RunFreesurferOnAll.sh](Scripts/ShellScripts/RunFreesurferOnAll.sh) for the code used to run freesurfer on the original anatomical images). 
+After data are copied to the Data folder of this repository, the scripts described below should then be run from their respective folders. Processed data files and figures will be saved to subfolders of the `Data` folder. Note that to remove personally identifying information, the shared anatomical data are the skull-stripped brain.nii and associated masks produced by freesurfer's recon-all (see [RunFreesurferOnAll.sh](Scripts/ShellScripts/RunFreesurferOnAll.sh) for the code used to run freesurfer on the original anatomical images).
 
 ### fMRI Preprocessing
 Converts raw fMRI data into preprocessed files. Run the following:
