@@ -1,5 +1,6 @@
 # Large data files
 Data/*
+*.zip
 
 # Figures produced by the code
 Figures/*.png
