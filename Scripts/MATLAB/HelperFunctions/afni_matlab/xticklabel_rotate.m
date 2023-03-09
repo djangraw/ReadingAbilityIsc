@@ -7,7 +7,7 @@ function hText = xticklabel_rotate(XTick,rot,varargin)
 % {opt}     XTick       - vector array of XTick positions & values (numeric) 
 %                           uses current XTick values or XTickLabel cell array by
 %                           default (if empty) 
-% {opt}     rot         - angle of rotation in degrees, 90° by default
+% {opt}     rot         - angle of rotation in degrees, 90ï¿½ by default
 % {opt}     XTickLabel  - cell array of label strings
 % {opt}     [var]       - "Property-value" pairs passed to text generator
 %                           ex: 'interpreter','none'
@@ -15,26 +15,26 @@ function hText = xticklabel_rotate(XTick,rot,varargin)
 %
 % Output:   hText       - handle vector to text labels
 %
-% Example 1:  Rotate existing XTickLabels at their current position by 90°
+% Example 1:  Rotate existing XTickLabels at their current position by 90ï¿½
 %    xticklabel_rotate
 %
-% Example 2:  Rotate existing XTickLabels at their current position by 45° and change
+% Example 2:  Rotate existing XTickLabels at their current position by 45ï¿½ and change
 % font size
 %    xticklabel_rotate([],45,[],'Fontsize',14)
 %
-% Example 3:  Set the positions of the XTicks and rotate them 90°
+% Example 3:  Set the positions of the XTicks and rotate them 90ï¿½
 %    figure;  plot([1960:2004],randn(45,1)); xlim([1960 2004]);
 %    xticklabel_rotate([1960:2:2004]);
 %
-% Example 4:  Use text labels at XTick positions rotated 45° without tex interpreter
+% Example 4:  Use text labels at XTick positions rotated 45ï¿½ without tex interpreter
 %    xticklabel_rotate(XTick,45,NameFields,'interpreter','none');
 %
-% Example 5:  Use text labels rotated 90° at current positions
+% Example 5:  Use text labels rotated 90ï¿½ at current positions
 %    xticklabel_rotate([],90,NameFields);
 %
-% Note : you can not re-run xticklabel_rotate on the same graph. 
+% Note : you can not RE-RUN xticklabel_rotate on the same graph. 
 %
-% 
+
 
 
 % This is a modified version of xticklabel_rotate90 by Denis Gilbert
@@ -53,6 +53,13 @@ function hText = xticklabel_rotate(XTick,rot,varargin)
 % 23-05-03
 % Modified 03-11-06 after user comment
 %	Allow for exisiting XTickLabel cell array
+% Modified 03-03-2006 
+%   Allow for labels top located (after user comment)
+%   Allow case for single XTickLabelName (after user comment)
+%   Reduced the degree of resizing
+% Modified 11-jun-2010
+%   Response to numerous suggestions on MatlabCentral to improve certain
+%   errors.
 
 % Other m-files required: cell2mat
 % Subfunctions: none
@@ -66,6 +73,38 @@ function hText = xticklabel_rotate(XTick,rot,varargin)
 %   email: gilbertd@dfo-mpo.gc.ca  Web: http://www.qc.dfo-mpo.gc.ca/iml/
 %   February 1998; Last revision: 24-Mar-2003
 
+%COPYRIGHT NOTICE
+%Copyright (c) 2003, Brian Katz
+%Copyright (c) 2009, The MathWorks, Inc.
+%All rights reserved.
+%
+%Redistribution and use in source and binary forms, with or without 
+%modification, are permitted provided that the following conditions are 
+%met:
+%
+%    * Redistributions of source code must retain the above copyright 
+%      notice, this list of conditions and the following disclaimer.
+%    * Redistributions in binary form must reproduce the above copyright 
+%      notice, this list of conditions and the following disclaimer in 
+%      the documentation and/or other materials provided with the distribution
+%    * Neither the name of the The MathWorks, Inc. nor the names 
+%      of its contributors may be used to endorse or promote products derived 
+%      from this software without specific prior written permission.
+%     
+%THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+%AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+%IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+%ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+%LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+%CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+%SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+%INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+%CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+%ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+%POSSIBILITY OF SUCH DAMAGE.
+% 
+% Updated 10/21/16 by DJ - added 2nd arg 'var' to exist calls
+
 % check to see if xticklabel_rotate has already been here (no other reason for this to happen)
 if isempty(get(gca,'XTickLabel')),
     error('xticklabel_rotate : can not process, either xticklabel_rotate has already been run or XTickLabel field has been erased')  ;
@@ -73,7 +112,8 @@ end
 
 % if no XTickLabel AND no XTick are defined use the current XTickLabel
 %if nargin < 3 & (~exist('XTick') | isempty(XTick)),
-if (nargin < 3 || isempty(varargin{1})) & (~exist('XTick') | isempty(XTick)),
+% Modified with forum comment by "Nathan Pust" allow the current text labels to be used and property value pairs to be changed for those labels
+if (nargin < 3 || isempty(varargin{1})) & (~exist('XTick','var') | isempty(XTick)),
 	xTickLabels = get(gca,'XTickLabel')  ; % use current XTickLabel
 	if ~iscell(xTickLabels)
 		% remove trailing spaces if exist (typical with auto generated XTickLabel)
@@ -87,14 +127,14 @@ varargin = varargin(2:length(varargin));
 end
 
 % if no XTick is defined use the current XTick
-if (~exist('XTick') | isempty(XTick)),
+if (~exist('XTick','var') | isempty(XTick)),
     XTick = get(gca,'XTick')        ; % use current XTick 
 end
 
 %Make XTick a column vector
 XTick = XTick(:);
 
-if ~exist('xTickLabels'),
+if ~exist('xTickLabels','var'),
 	% Define the xtickLabels 
 	% If XtickLabel is passed as a cell array then use the text
 	if (length(varargin)>0) & (iscell(varargin{1})),
@@ -138,7 +178,15 @@ fs = get(gca,'fontsize');
 hText = text(XTick, y, xTickLabels,'fontsize',fs);
 
 % Rotate the text objects by ROT degrees
-set(hText,'Rotation',rot,'HorizontalAlignment','right',varargin{:})
+%set(hText,'Rotation',rot,'HorizontalAlignment','right',varargin{:})
+% Modified with modified forum comment by "Korey Y" to deal with labels at top
+% Further edits added for axis position
+xAxisLocation = get(gca, 'XAxisLocation');  
+if strcmp(xAxisLocation,'bottom')  
+    set(hText,'Rotation',rot,'HorizontalAlignment','right',varargin{:})  
+else  
+    set(hText,'Rotation',rot,'HorizontalAlignment','left',varargin{:})  
+end
 
 % Adjust the size of the axis to accomodate for longest label (like if they are text ones)
 % This approach keeps the top of the graph at the same place and tries to keep xlabel at the same place
@@ -157,12 +205,21 @@ set(get(gca,'xlabel'),'units','pixel')          ;
 set(get(gca,'ylabel'),'units','pixel')          ;
 
 origpos = get(gca,'position')                   ;
-textsizes = cell2mat(get(hText,'extent'))       ;
+
+% textsizes = cell2mat(get(hText,'extent'))       ;
+% Modified with forum comment from "Peter Pan" to deal with case when only one XTickLabelName is given. 
+x = get( hText, 'extent' );  
+if iscell( x ) == true  
+    textsizes = cell2mat( x ) ;  
+else  
+    textsizes = x;  
+end  
+
+largest =  max(textsizes(:,3))                  ;
 longest =  max(textsizes(:,4))                  ;
 
 laborigext = get(get(gca,'xlabel'),'extent')    ;
 laborigpos = get(get(gca,'xlabel'),'position')  ;
-
 
 labyorigext = get(get(gca,'ylabel'),'extent')   ;
 labyorigpos = get(get(gca,'ylabel'),'position') ;
@@ -174,16 +231,29 @@ leftext = get(hText(1),'extent')                ;
 leftdist = leftpos(1) + leftext(1)              ;
 if leftdist > 0,    leftdist = 0 ; end          % only correct for off screen problems
 
-botdist = origpos(2) + laborigpos(2)            ;
-newpos = [origpos(1)-leftdist longest+botdist origpos(3)+leftdist origpos(4)-longest+origpos(2)-botdist]  ;
+% botdist = origpos(2) + laborigpos(2)            ;
+% newpos = [origpos(1)-leftdist longest+botdist origpos(3)+leftdist origpos(4)-longest+origpos(2)-botdist]  
+%
+% Modified to allow for top axis labels and to minimize axis resizing
+if strcmp(xAxisLocation,'bottom')  
+    newpos = [origpos(1)-(min(leftdist,labyorigpos(1)))+labyorigpos(1) ...
+            origpos(2)+((longest+laborigpos(2))-get(gca,'FontSize')) ...
+            origpos(3)-(min(leftdist,labyorigpos(1)))+labyorigpos(1)-largest ...
+            origpos(4)-((longest+laborigpos(2))-get(gca,'FontSize'))];  
+else
+    newpos = [origpos(1)-(min(leftdist,labyorigpos(1)))+labyorigpos(1) ...
+            origpos(2) ...
+            origpos(3)-(min(leftdist,labyorigpos(1)))+labyorigpos(1)-largest ...
+            origpos(4)-(longest)+get(gca,'FontSize')];  
+end
+newpos(newpos<0)=0; % Added 1/26/18 by DJ
 set(gca,'position',newpos)                      ;
 
-% readjust position of nex labels after resize of plot
+% readjust position of text labels after resize of plot
 set(hText,'units','data')                       ;
 for loop= 1:length(hText),
     set(hText(loop),'position',[XTick(loop), y(loop)])  ;
 end
-
 
 % adjust position of xlabel and ylabel
 laborigpos = get(get(gca,'xlabel'),'position')  ;
@@ -209,3 +279,4 @@ set(gca,'units','normalized')                        ;
 if nargout < 1,
     clear hText
 end
+

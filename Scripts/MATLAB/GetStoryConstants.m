@@ -9,6 +9,7 @@ function info = GetStoryConstants()
 % Updated 5/26/22 by DJ - made it work off campus, and finds behFile in
 % PRJDIR if dataDir is not attached.
 % Updated 3/2/23 by DJ - new directory structure
+% Updated 3/9/23 by DJ - new beh file
 
 % set PRJDIR to the location of this file's parent's parent directory
 scriptPath = mfilename('fullpath');
@@ -68,9 +69,9 @@ info.okReadSubj_iqMatched = {'h1003' 'h1004' 'h1010' 'h1011' 'h1012' ...
 % Get behavior file
 % info.behFile = [info.PRJDIR '/A182IncludedSubjectBehavior_2019-01-04.xlsx'];
 if exist(info.dataDir,'dir')
-    info.behFile = [info.dataDir '/A182IncludedSubjectBehavior_2022-05-23.xlsx'];
+    info.behFile = [info.dataDir '/A182IncludedSubjectBehavior_2023-02-28.xlsx'];
 else
-    info.behFile = [info.PRJDIR '/A182IncludedSubjectBehavior_2022-05-23.xlsx'];
+    info.behFile = [info.PRJDIR '/A182IncludedSubjectBehavior_2023-02-28.xlsx'];
 end
 
 % Add afni directory to PATH
