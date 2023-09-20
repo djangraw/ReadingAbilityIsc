@@ -18,6 +18,8 @@ newPath = join(pathParts(1:end-3),'/');
 newPath = newPath{1};
 info.PRJDIR = newPath; % overall project directory
 info.dataDir = [info.PRJDIR '/Data/']; % data directory
+info.dataDir = '/Users/djangraw/Documents/Research/HaskinsReadingIsc/Data';
+fprintf('dataDir = %s\n',info.dataDir);
 
 % Constants
 info.nT = 360; % across all runs

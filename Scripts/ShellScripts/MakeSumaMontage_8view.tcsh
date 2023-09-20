@@ -102,7 +102,7 @@ suma                                                    \
     -sv   $suma_sv               &
 
 echo "\n===NAP 2/12...===\n"
-sleep 15 #3
+sleep 10 #3
 
 # start driving
 DriveSuma                                              \
@@ -111,7 +111,7 @@ DriveSuma                                              \
     -com viewer_cont -key '.' # inflated brain (comment out for regular brain)
 
 echo "\n===NAP 3/12...===\n"
-sleep 3 #10
+sleep 6 #3
 
 # crosshair off, node off, faceset off, label off, background white
 DriveSuma                                              \

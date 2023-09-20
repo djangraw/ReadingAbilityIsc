@@ -4,12 +4,14 @@ function SetUpClusterThreshMaskedStats(statsfolder,statsfile,statsfile_space,iMe
 %
 % Created 3/25/19 by DJ based on SetUpSumaMontage_4view.m.
 % Updated 3/2/23 by DJ - new directory structure, n68.
+% Updated 7/10/23 by DJ - switched to '' to allow string concatenation,
+% fixed ShellScripts path
 
 %% Set defaults
 
 % specify group stats files
 info = GetStoryConstants;
-d.statsfolder = [info.dataDir "/IscResults/Group/"];
+d.statsfolder = [info.dataDir '/IscResults/Group/'];
 d.statsfile   = "3dLME_2Grps_readScoreMedSplit_n68_Automask";      % output effect+stats filename
 d.statsfile_space = "tlrc";
 % indices of subbricks (0-based numbering)
@@ -22,7 +24,7 @@ d.maskfile    = "MNI_mask_epiRes.nii";
 d.cmd_file    = "ClustMaskCmd.tcsh"; % tcsh command created by this file
 
 % Cluster parameters
-d.csim_folder = [info.dataDir "/ClustSimFiles"];
+d.csim_folder = [info.dataDir '/ClustSimFiles'];
 d.csim_neigh  = 1;         % neighborhood; could be NN=1,2,3
 d.csim_NN     = "NN${csim_neigh}";  % other form of neigh
 d.csim_sided  = "bisided"; % test type; could be 1sided, 2sided or bisided
@@ -50,7 +52,7 @@ end
 
 fprintf(fid,'\n# run script\n');
 % fprintf(fid,'cd $statsfolder\n');
-fprintf(fid,'source %s/Scripts/GetClusterThreshMaskedStats.tcsh\n',info.PRJDIR);
+fprintf(fid,'source %s/Scripts/ShellScripts/GetClusterThreshMaskedStats.tcsh\n',info.PRJDIR);
 fclose(fid);
 
 %% Run result

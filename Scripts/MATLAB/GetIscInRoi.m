@@ -8,6 +8,7 @@ function iscInRoi = GetIscInRoi(subj_sorted,roiFile,iRoi)
 %                         take mean, then convert back to r
 % Updated 5/19/22 by DJ - In pairwise ISC input table, replace original 
 %                         data directory with more current one from info
+% Updated 8/4/23 by DJ - nanmean instead of mean
 
 if ~exist('roiFile','var') || isempty(roiFile)
     roiFile = '3dLME_2Grps_readScoreMedSplit_n42_Automask_top-bot_clust_p0.01_a0.05_bisided_map.nii.gz';
@@ -56,7 +57,7 @@ for i=1:nSubj
             isInRoi = rois==iRoi(k);
             fprintf('found %d voxels in ROI %d.\n',sum(isInRoi(:)),iRoi(k));
             % convert R to z score, mean, and convert back to R
-            iscInRoi(i,j,k) = tanh(mean(atanh(V(isInRoi))));
+            iscInRoi(i,j,k) = tanh(nanmean(atanh(V(isInRoi))));
             % take simple mean without converting
 %             iscInRoi(i,j,k) = mean(V(isInRoi));
         end

@@ -15,7 +15,8 @@
 %   investigate specific sub-scores
 % Updated 7/11/22 by HS - incorporated permutation test code from HS
 % Updated 7/11/22 by DJ - completed to-do list, cropped, added comments
-# Updated 3/2/23 by DJ - updated file structure for sharing
+% Updated 3/2/23 by DJ - updated file structure for sharing
+% Updated 5/2/23 by DJ - TOWRE Phoenetic Decoding -> Phonemic
 
 % behScoreName = "ReadScore";
 % behScoreName = "MRIScans__ProfileAge";
@@ -27,7 +28,7 @@ subjects = constants.okReadSubj;
 
 %% SORT BY BEH SCORE
 
-if (behScoreName == "ReadScore")
+if startsWith(behScoreName,"ReadScore")
     % get standard reading scores
     disp('Getting reading scores...')
     [readScores, weights,weightNames,IQs,ages] = GetStoryReadingScores(subjects);
@@ -57,10 +58,20 @@ else
 %         behTable_sorted.WoodcockJohnsonVerified__LW_SS, behTable_sorted.WoodcockJohnsonVerified__WA_SS,...
 %         behTable_sorted.WASIVerified__Perf_IQ,behTable_sorted.MRIScans__ProfileAge];
 %     % weightNames = {'TOWRE_SWE_SS','TOWRE_PDE_SS','TOWRE_TWRE_SS','WJ3_BscR_SS','WJ3_LW_SS','WJ3_WA_SS'};
-%     weightNames = {'TOWRE Sight-Word','TOWRE Phoenetic Decoding','WJ3 Letter-Word ID','WJ3 Word Attack','WASI Performance IQ','Age (years)'};
-
-
+%     weightNames = {'TOWRE Sight-Word','TOWRE Phonemic Decoding','WJ3 Letter-Word ID','WJ3 Word Attack','WASI Performance IQ','Age (years)'};
 end
+
+if contains(behScoreName,'omprehension')
+    behTable = readtable(constants.behFile);
+    compScore_sorted = zeros(1,length(subj_sorted));
+    for i = 1:length(subj_sorted)
+        compScore_sorted(i) = behTable.("Comprehension__PercentageCorrect")(strcmp(behTable.haskinsID,subj_sorted{i}));
+    end
+    behScore_sorted = behScore_sorted(~isnan(compScore_sorted));
+    subj_sorted = subj_sorted(~isnan(compScore_sorted));
+    fprintf('%d/%d subjects removed for lacking Comprehension score.\n',nSubj-length(subj_sorted),nSubj);
+end
+
 % TODO: In place of behScore_sorted, try each of these other scores that we might
 % hypothesize match the function of a certain ROI
 
@@ -384,22 +395,22 @@ disp('Done!')
 %% TODO: Turn into SUMA image montage
 
 resultsDir = sprintf('%s/IscResults/Group',constants.dataDir);
-inFile = sprintf('SUMA_IMAGES_2022/%s_RSA_AnnaK_shen_268+tlrc',behScoreName); % brick you want to save
+inFile = sprintf('%s_RSA_AnnaK_shen_268+tlrc',behScoreName); % brick you want to save
 
 % make SUMA montage with q=0.05 cutoff
-outFile = sprintf('suma_8view_%s_RSA_AnnaK_shen_268_lim0.4_q0.05.jpg',behScoreName);
+outFile = sprintf('SUMA_IMAGES_2022/suma_8view_%s_RSA_AnnaK_shen_268_lim0.4_q0.05.jpg',behScoreName);
 SetUpSumaMontage_8view(resultsDir,'TEMP_RSA_AnnaK.tcsh','MNI152_2009_SurfVol.nii',...
     inFile,'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
     0,1,'./SUMA_IMAGES_2022','',outFile,[],0.4,0.95,'');
 
 % make SUMA montage with q=0.025 cutoff
-outFile = sprintf('SUMA_IMAGES_2022/suma_8view_%s_RSA_AnnaK_shen_268_lim0.4_q0.025.jpg',behScoreName);
-SetUpSumaMontage_8view(resultsDir,'TEMP_RSA_AnnaK.tcsh','MNI152_2009_SurfVol.nii',...
-    inFile,'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
-    0,1,'./SUMA_IMAGES_2022','',outFile,[],0.4,0.975,'');
-
-% make SUMA montage with q=0.01 cutoff
-outFile = sprintf('SUMA_IMAGES_2022/suma_8view_%s_RSA_AnnaK_shen_268_lim0.4_q0.01.jpg',behScoreName);
-SetUpSumaMontage_8view(resultsDir,'TEMP_RSA_AnnaK.tcsh','MNI152_2009_SurfVol.nii',...
-    inFile,'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
-    0,1,'./SUMA_IMAGES_2022','',outFile,[],0.4,0.99,'');
+% outFile = sprintf('SUMA_IMAGES_2022/suma_8view_%s_RSA_AnnaK_shen_268_lim0.4_q0.025.jpg',behScoreName);
+% SetUpSumaMontage_8view(resultsDir,'TEMP_RSA_AnnaK.tcsh','MNI152_2009_SurfVol.nii',...
+%     inFile,'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+%     0,1,'./SUMA_IMAGES_2022','',outFile,[],0.4,0.975,'');
+% 
+% % make SUMA montage with q=0.01 cutoff
+% outFile = sprintf('SUMA_IMAGES_2022/suma_8view_%s_RSA_AnnaK_shen_268_lim0.4_q0.01.jpg',behScoreName);
+% SetUpSumaMontage_8view(resultsDir,'TEMP_RSA_AnnaK.tcsh','MNI152_2009_SurfVol.nii',...
+%     inFile,'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+%     0,1,'./SUMA_IMAGES_2022','',outFile,[],0.4,0.99,'');

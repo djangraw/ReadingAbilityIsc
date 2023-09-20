@@ -3,6 +3,7 @@ function PrintGroupingsByAgeAndIQ()
 % Created 7/5/19 by DJ.
 % Updated 5/23/22 by DJ - updated behFile
 % Updated 11/2/22 by DJ - added handeness & subject motion
+% Updated 6/14/23 by DJ - added comprehension
 
 %% Set up
 info = GetStoryConstants;
@@ -39,6 +40,14 @@ cutoff = nanmedian(subjMotion);
 subj_topMotion = subjects(subjMotion>cutoff);
 subj_botMotion = subjects(subjMotion<=cutoff);
 
+%% Get comprehension scores
+comprehension = behTable.Comprehension__PercentageCorrect;
+% crop to those with comprehension scores present
+subjectsWithComprehension = subjects(~isnan(comprehension));
+comprehension = comprehension(~isnan(comprehension));
+cutoff = median(comprehension);
+subj_topComprehension = subjectsWithComprehension(comprehension>cutoff);
+subj_botComprehension = subjectsWithComprehension(comprehension<=cutoff);
 
 %% Print for R script
 % display results for easy input into R script
@@ -67,3 +76,9 @@ fprintf('# list labels for Group 1 - motion <= MEDIAN(motion)\n')
 fprintf('G1Subj <- c(''%s'')\n',join(subj_botMotion,''','''));
 fprintf('# list labels for Group 2 - motion > MEDIAN(motion)\n')
 fprintf('G2Subj <- c(''%s'')\n',join(subj_topMotion,''','''));
+
+fprintf('===FOR COMPREHENSION TWO-GROUP R SCRIPT:===\n');
+fprintf('# list labels for Group 1 - comprehension <= MEDIAN(comprehension)\n')
+fprintf('G1Subj <- c(''%s'')\n',join(subj_botComprehension,''','''));
+fprintf('# list labels for Group 2 - comprehension > MEDIAN(comprehension)\n')
+fprintf('G2Subj <- c(''%s'')\n',join(subj_topComprehension,''','''));

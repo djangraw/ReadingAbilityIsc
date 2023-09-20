@@ -2,6 +2,9 @@ function [subj_sorted,readScore_sorted,iq_sorted,isTop_sorted] = SortStorySubjec
 
 info = GetStoryConstants;
 [readScores,weights,weightNames,IQs,ages] = GetStoryReadingScores(info.okReadSubj);
+% overwrite weight names
+weightNames = {'TOWRE Sight-Word','TOWRE Phonemic Decoding','WJ3 Letter-Word ID','WJ3 Word Attack'};
+
 
 %% Sort
 [readScore_sorted,order] = sort(readScores,'descend');
@@ -44,6 +47,7 @@ xticklabel_rotate([],45)
 ylabel('Weight in Reading Score')
 grid on
 set(gcf,'Position',[184   164   709   441]);
+saveas(gcf,sprintf('%s/Data/ReadScoreWeights.png',info.PRJDIR));
 saveas(gcf,sprintf('%s/Data/ReadScoreWeights.eps',info.PRJDIR));
 
 %%

@@ -12,7 +12,7 @@ doPause = false;
 csim_pthr = 0.002;
 constants = GetStoryConstants;
 dataDir = constants.dataDir;
-
+dimensional_clim = 0.05;
 
 % %% 1-grp Aud-Vis, q<0.01
 % SetUpSumaMontage_8view(sprintf('%s/GROUP_block_tlrc',dataDir),'TEMP_AUD-VIS.tcsh','MNI152_2009_SurfVol.nii',...
@@ -38,6 +38,35 @@ dataDir = constants.dataDir;
 %
 %
 %
+
+% ======= 1-grp Modality Comparisons (NEW, 3dMVM) ====== %
+
+%% 1-grp Aud-Vis, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/GROUP_block_tlrc',dataDir),'TEMP_AUD-VIS_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dMVM_Dimensional_readScore_n68_motionAndIqCovar_aud-vis_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dMVM_1grp_aud-vis_lim0.3_p%g_a0.05.jpg',csim_pthr),[],0.3,'0','');
+if doPause, pause(60); end
+%% 1-grp Aud+Vis, p<csim_pthr alpha<0.05 (FIG. S4A)
+SetUpSumaMontage_8view(sprintf('%s/GROUP_block_tlrc',dataDir),'TEMP_AUD+VIS_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dMVM_Dimensional_readScore_n68_motionAndIqCovar_aud+vis_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dMVM_1grp_aud+vis_lim0.3_p%g_a0.05.jpg',csim_pthr),[],0.3,'0','');
+if doPause, pause(60); end
+%% 1-grp Aud, p<csim_pthr alpha<0.05 (FIG. S5A)
+SetUpSumaMontage_8view(sprintf('%s/GROUP_block_tlrc',dataDir),'TEMP_AUD_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dMVM_Dimensional_readScore_n68_motionAndIqCovar_aud_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dMVM_1grp_aud_lim0.3_p%g_a0.05.jpg',csim_pthr),[],0.3,'0','');
+if doPause, pause(60); end
+%% 1-grp Vis, p<csim_pthr alpha<0.05 (FIG. S5A)
+SetUpSumaMontage_8view(sprintf('%s/GROUP_block_tlrc',dataDir),'TEMP_VIS_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dMVM_Dimensional_readScore_n68_motionAndIqCovar_vis_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dMVM_1grp_vis_lim0.3_p%g_a0.05.jpg',csim_pthr),[],0.3,'0','');
+if doPause, pause(60); end
+
+
+
+
+% ======= 1-grp Modality Comparisons (OLD, 3dTTEST) ====== %
+
 %% 1-grp Aud-Vis, p<csim_pthr alpha<0.05
 SetUpSumaMontage_8view(sprintf('%s/GROUP_block_tlrc',dataDir),'TEMP_AUD-VIS_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
     sprintf('ttest_allSubj_1grp_minus12_aud-vis_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
@@ -341,3 +370,296 @@ if doPause, pause(60); end
 SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_AUD-VIS_CLUSTMAP.tcsh','MNI152_2009_SurfVol.nii',...
     sprintf('3dLME_2Grps_readScoreMedSplit_n40-iqMatched_Automask_top-bot_clust_p%g_a0.05_bisided_map.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
     0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_ISC_readScoreGrps_n40-iqMatched_top-bot_clustmap_p%g_a0.05.jpg',csim_pthr),[],32,'0','roi_i32');
+
+
+%% A1 & V1, NeuroSynth
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_AUD-VIS_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('%s/NeuroSynthTerms/primaryaud_primaryvis_mask+tlrc',dataDir),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','','SUMA_IMAGES_2022/suma_8view_primaryaud_primaryvis.jpg',[],32,'0','roi_i32');
+if doPause, pause(60); end
+
+
+%% 2-grp ISC WJ3 passage Comprehension grps, n=60, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dLME_2Grps_comprehensionMedSplit_n61_Automask_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_ISC_comprehensionGrps_n61_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 2-grp ISC Motion grps, n=68, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dLME_2Grps_motionMedSplit_n68_Automask_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_ISC_motionGrps_n68_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+
+
+%% 2-grp ISC ReadScore grps (quant) Motion covariate, POPULATION centered, n=68, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_2Grps_readScoreMedSplit_n68_motionCovar_populationCentered_v2_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n68_motionCovar_populationCentered_v2_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 2-grp ISC ReadScore grps (dummy) Motion covariate, POPULATION centered, n=68, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_2Grps_readScoreMedSplit_n68_motionCovar_populationCentered_v3_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n68_motionCovar_populationCentered_v3_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 2-grp ISC ReadScore grps (dummy) Motion & IQ covariates, POPULATION centered, n=68, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_2Grps_readScoreMedSplit_n68_motionAndIqCovar_populationCentered_v3_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n68_motionAndIqCovar_populationCentered_v3_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 2-grp ISC ReadScore grps Motion covariate, GROUP centered, n=68, top-bot, p<csim_pthr alpha<0.05
+% SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+%     sprintf('3dISC_2Grps_readScoreMedSplit_n68_motionCovar_groupCentered_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+%     0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n68_motionCovar_groupCentered_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% % 
+% if doPause, pause(60); end
+
+%% 2-grp ISC ReadScore grps (dummy) NO Motion covariate, n=68, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_2Grps_readScoreMedSplit_n68_v3_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n68_v3_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 2-grp ISC ReadScore grps (dummy) Motion covariate, n=40, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_2Grps_readScoreMedSplit_n40-iqMatched_motionCovar_populationCentered_v3_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n40-iqMatched_motionCovar_v3_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 2-grp ISC ReadScore grps (dummy) NO Motion covariate, n=40, top-bot, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_2Grps_readScoreMedSplit_n40-iqMatched_v3_top-bot_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreGrps_n40-iqMatched_v3_top-bot_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+
+
+
+% ================================= %
+% ======= DIMENSIONAL 3dISC ======= %
+% ================================= %
+
+%% 3dISC ReadScore Dimensional, Motion & IQ covariates, POPULATION centered, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional CLUSTER MAP, Motion and IQ covariates, POPULATION centered, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_ReadScore_clust_p%g_a0.05_bisided_map.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_ReadScore_clustmap_p%g_a0.05.jpg',csim_pthr),[],32,'0','roi_i32');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional CLUSTER MAP OVERLAP with predefined language ROIs, Motion and IQ covariates, POPULATION centered, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_ReadScore_clust_p%g_a0.05_bisided_roioverlap_map.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_ReadScore_roioverlap_clustmap_p%g_a0.05.jpg',csim_pthr),[],9,'0','cb_spiral35');
+% 
+if doPause, pause(60); end
+
+
+%% 3dISC ReadScore Dimensional, Motion covariate, POPULATION centered, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotion_n68_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotion_n68_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional, NO Motion covariate, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScore_n68_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScore_n68_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+%% 3dISC ReadScore Dimensional, Motion and IQ covariates, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n40-iqMatched_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n40-iqMatched_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional CLUSTER MAP, Motion and IQ covariates, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n40-iqMatched_ReadScore_clust_p%g_a0.05_bisided_map.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n40-iqMatched_ReadScore_clustmap_p%g_a0.05.jpg',csim_pthr),[],32,'0','roi_i32');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional, Motion covariate, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotion_n40-iqMatched_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotion_n40-iqMatched_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional, NO Motion covariate, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScore_n40-iqMatched_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScore_n40-iqMatched_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+% ======= MODALITY-SPECIFIC 3dISC ======= %
+
+%% 3dISC ReadScore Dimensional, AUD, NO Motion covariate, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScore_n68_aud_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScore_n68_aud_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional, VIS, NO Motion covariate, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScore_n68_vis_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreDim_n68_vis_v2_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional, AUD-VIS, NO Motion covariate, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScore_n68_aud-vis_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreDim_n68_aud-vis_v2_ReadScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+% ======= 1-GROUP MODALITY-SPECIFIC 3dISC ======= %
+
+%% 3dISC 1-GROUP (from ReadScore Dimensional model), Motion & IQ covariates, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_1grp_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_1grp_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC 1-GROUP (from ReadScore Dimensional model), AUD, Motion & IQ covariates, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_aud_1grp_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_aud_1grp_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC 1-GROUP (from ReadScore Dimensional model), VIS, Motion & IQ covariates, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_vis_1grp_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_vis_1grp_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC 1-GROUP (from ReadScore Dimensional model), AUD-VIS, Motion & IQ covariates, n=68, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_aud-vis_1grp_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_aud-vis_1grp_lim0.1_p%g_a0.05.jpg',csim_pthr),[],0.1,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+% ======= NN Model 3dISC ======= %
+
+%% 3dISC ReadScore Dimensional, NN model, NO Motion covariate, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_Dimensional_readScore_n68_NNmodel_v2_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreDim_n68_NNmodel_v2_readScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC ReadScore Dimensional, NN model, Motion covariate (pouplation centered), n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_Dimensional_readScore_n68_NNmodel_motionCovar_ReadScore_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_readScoreDim_n68_NNmodel_motionCovar_readScore_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+
+% ======= IQ 3dISC ======= %
+
+%% 3dISC IQ Dimensional, Motion and ReadScore covariates, POPULATION centered, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_IQ_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_IQ_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC IQ Dimensional, Motion and ReadScore covariates, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n40-iqMatched_IQ_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n40-iqMatched_IQ_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC IQ Dimensional, NO covariates, POPULATION centered, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_IQ_n68_IQ_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_IQ_n68_IQ_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC IQ Dimensional, NO covariates, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_IQ_n40-iqMatched_IQ_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_IQ_n40-iqMatched_IQ_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+
+% ======= MOTION 3dISC ======= %
+
+%% 3dISC Motion Dimensional, IQ and ReadScore covariates, POPULATION centered, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n68_Motion_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n68_Motion_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC Motion Dimensional, IQ and ReadScore covariates, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_ReadScoreMotionIQ_n40-iqMatched_Motion_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_ReadScoreMotionIQ_n40-iqMatched_Motion_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC Motion Dimensional, NO covariates, POPULATION centered, n=68, ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_Motion_n68_Motion_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_Motion_n68_Motion_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+%% 3dISC Motion Dimensional, NO covariates, POPULATION centered, n=40 (IQ-matched), ReadScore, p<csim_pthr alpha<0.05
+SetUpSumaMontage_8view(sprintf('%s/IscResults/Group',dataDir),'TEMP_CLUST.tcsh','MNI152_2009_SurfVol.nii',...
+    sprintf('3dISC_Motion_n40-iqMatched_Motion_clust_p%g_a0.05_bisided_EE.nii.gz',csim_pthr),'suma_MNI152_2009/MNI152_2009_both.spec','MNI152_2009_SurfVol.nii',...
+    0,0,'./SUMA_IMAGES_2022','',sprintf('SUMA_IMAGES_2022/suma_8view_3dISC_Motion_n40-iqMatched_Motion_lim%g_p%g_a0.05.jpg',dimensional_clim,csim_pthr),[],dimensional_clim,'0','');
+% 
+if doPause, pause(60); end
+
+
+
+
+
+
